@@ -1,0 +1,6 @@
+{
+    "rpc_url": "https://rpc.ankr.com/polygon",
+    "chain_id": 137,
+    "contract_address": "0x7573933eB12Fa15D5557b74fDafF845B3BaF0ba2",
+    "gas_limit": 120000
+}

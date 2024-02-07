@@ -86,7 +86,9 @@ def levelUp(w3, config, private_key, id, method_hex):
     tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
 
     # Output transaction hash
-    print(f"Transaction hash ({method_hex}): {tx_hash.hex()}")
+    # print(f"Transaction hash ({method_hex}): {tx_hash.hex()}")
+    wallet_address = account.address
+    print(f"Transaction hash ({wallet_address}_{id}): {tx_hash.hex()}")
 
     # Wait for transaction receipt
     tx_receipt = None
@@ -193,7 +195,9 @@ def execute_transaction(w3, config, private_key, id, method_hex, num_executions)
         tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
 
         # Output transaction hash
-        print(f"Transaction hash ({method_hex}): {tx_hash.hex()}")
+        # print(f"Transaction hash ({method_hex}): {tx_hash.hex()}")
+        wallet_address = account.address
+        print(f"Transaction hash ({wallet_address}_{id}): {tx_hash.hex()}")
 
         # Wait for transaction receipt
         tx_receipt = None
@@ -247,7 +251,9 @@ def invite(w3, config, private_key, myid, method_hex, friendid):
     tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
 
     # Output transaction hash
-    print(f"Transaction hash ({method_hex}): {tx_hash.hex()}")
+    # print(f"Transaction hash ({method_hex}): {tx_hash.hex()}")
+    wallet_address = account.address
+    print(f"Transaction hash ({wallet_address}_{id}): {tx_hash.hex()}")
 
     # Wait for transaction receipt
     tx_receipt = None

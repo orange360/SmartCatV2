@@ -6,6 +6,24 @@ from web3.middleware import geth_poa_middleware
 import requests
 import json
 
+def wait_for_receipt(w3, tx_hash, max_attempts=60):
+    attempts = 0
+    while attempts < max_attempts:
+        print("Waiting for transaction receipt... (Attempt {}/{} )".format(attempts + 1, max_attempts))
+        time.sleep(5)
+        try:
+            tx_receipt = w3.eth.get_transaction_receipt(tx_hash)
+            if tx_receipt is not None and tx_receipt['status'] is not None:
+                return tx_receipt
+        except web3.exceptions.TransactionNotFound:
+            pass
+        attempts += 1
+
+    return None
+
+
+
+
 def canLevelup(cat_id):
     url = 'https://polygon-mainnet.infura.io/v3/3ca8f1ba91f84e1f97c99f6218fe3743'
     headers = {
@@ -92,13 +110,15 @@ def levelUp(w3, config, private_key, id, method_hex):
 
     # Wait for transaction receipt
     tx_receipt = None
-    while tx_receipt is None or tx_receipt['status'] is None:
-        print("Waiting for transaction receipt...")
-        time.sleep(5)  # Add a delay of 5 seconds before checking the receipt again
-        try:
-            tx_receipt = w3.eth.get_transaction_receipt(tx_hash)
-        except web3.exceptions.TransactionNotFound:
-            pass
+    # while tx_receipt is None or tx_receipt['status'] is None:
+    #     print("Waiting for transaction receipt...")
+    #     time.sleep(5)  # Add a delay of 5 seconds before checking the receipt again
+    #     try:
+    #         tx_receipt = w3.eth.get_transaction_receipt(tx_hash)
+    #     except web3.exceptions.TransactionNotFound:
+    #         pass
+
+    tx_receipt = wait_for_receipt(w3, tx_hash)
 
     if tx_receipt['status'] == 1:
         print("Transaction successful!")
@@ -201,13 +221,15 @@ def execute_transaction(w3, config, private_key, id, method_hex, num_executions)
 
         # Wait for transaction receipt
         tx_receipt = None
-        while tx_receipt is None or tx_receipt['status'] is None:
-            print("Waiting for transaction receipt...")
-            time.sleep(5)  # Add a delay of 5 seconds before checking the receipt again
-            try:
-                tx_receipt = w3.eth.get_transaction_receipt(tx_hash)
-            except web3.exceptions.TransactionNotFound:
-                pass
+        # while tx_receipt is None or tx_receipt['status'] is None:
+        #     print("Waiting for transaction receipt...")
+        #     time.sleep(5)  # Add a delay of 5 seconds before checking the receipt again
+        #     try:
+        #         tx_receipt = w3.eth.get_transaction_receipt(tx_hash)
+        #     except web3.exceptions.TransactionNotFound:
+        #         pass
+
+        tx_receipt = wait_for_receipt(w3, tx_hash)
 
         if tx_receipt['status'] == 1:
             print("Transaction successful!")
@@ -253,17 +275,19 @@ def invite(w3, config, private_key, myid, method_hex, friendid):
     # Output transaction hash
     # print(f"Transaction hash ({method_hex}): {tx_hash.hex()}")
     wallet_address = account.address
-    print(f"Transaction hash ({wallet_address}_{id}): {tx_hash.hex()}")
+    print(f"Transaction hash ({wallet_address}_{myid}): {tx_hash.hex()}")
 
     # Wait for transaction receipt
     tx_receipt = None
-    while tx_receipt is None or tx_receipt['status'] is None:
-        print("Waiting for transaction receipt...")
-        time.sleep(5)  # Add a delay of 5 seconds before checking the receipt again
-        try:
-            tx_receipt = w3.eth.get_transaction_receipt(tx_hash)
-        except web3.exceptions.TransactionNotFound:
-            pass
+    # while tx_receipt is None or tx_receipt['status'] is None:
+    #     print("Waiting for transaction receipt...")
+    #     time.sleep(5)  # Add a delay of 5 seconds before checking the receipt again
+    #     try:
+    #         tx_receipt = w3.eth.get_transaction_receipt(tx_hash)
+    #     except web3.exceptions.TransactionNotFound:
+    #         pass
+
+    tx_receipt = wait_for_receipt(w3, tx_hash)
 
     if tx_receipt['status'] == 1:
         print("Transaction successful!")

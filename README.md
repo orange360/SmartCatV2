@@ -1,6 +1,8 @@
 # 安装依赖：
 
 在使用之前，请确保已安装所需的依赖。在命令行中执行以下命令：
+
+```bash
 pip install -r requirements.txt
 
 # 用户参数配置：
